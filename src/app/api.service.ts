@@ -37,9 +37,9 @@ export class ApiService {
 
     constructor(private http: HttpClient) { }
 
-    get(url: string, params: { [key: string]: any }): Observable<string> {
+    request(method: string, url: string, params: { [key: string]: any }): Observable<string> {
         return this.http.request<string>(
-            'get', this.apiDocs.apiHost + url,
+            method, this.apiDocs.apiHost + url,
             { headers: this.getHeaders(), params: this.getParams(params) });
     }
 

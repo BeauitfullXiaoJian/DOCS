@@ -35,6 +35,7 @@
                 </div>
                 <div>
                     <button (click)="tryApi(successForm,errorForm)" igxButtonBackground="#731963" igxButton="raised" igxRipple>测试</button>
+                    <button (click)="paramsForm.open()" igxButtonBackground="tomato" igxButton="raised" igxRipple>参数预览</button>
                 </div>
             </igx-card-content>
         </igx-card>
@@ -133,19 +134,18 @@
         </igx-card>
     </igx-tabs-group>
     <igx-tabs-group label="文本" style="padding:4px;">
-        <pre style="color:white;margin-top:5px;">{{apiForm|json}}</pre>
+        <pre style="background-color:white;overflow: auto;"><code class="language-json" [innerHTML]="getJsonHtml(apiForm)"></code></pre>
     </igx-tabs-group>
 </igx-tabs>
 <igx-dialog #successForm title="请求结果" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
-    <div style="padding:10px;min-width: 800px;">
-        <pre style="background-color:white;"><code class="language-json" [innerHTML]="getJsonHtml()"></code>
+    <pre style="min-width:800px;background-color:white;max-height: 600px;overflow: auto;box-shadow: 0 2px 4px 0 white;"><code class="language-json" [innerHTML]="getJsonHtml()"></code>
         </pre>
-    </div>
 </igx-dialog>
-<igx-dialog #errorForm title="请求结果" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
+<igx-dialog #errorForm title="接口异常" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
     <p>状态码：{{responseJson.status}}</p>
-    <div style="padding:10px;min-width: 800px;">
-        <pre style="background-color:white;"><code class="language-json" [innerHTML]="getJsonHtml()"></code>
-        </pre>
-    </div>
+    <div style="min-width:800px;background-color:white;max-height: 600px;overflow: auto;box-shadow: 0 2px 4px 0 white;" [innerHTML]="responseJson.error"></div>
+</igx-dialog>
+<igx-dialog #paramsForm title="参数预览" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
+    <pre style="min-width:500px;background-color:white;overflow: auto;box-shadow: 0 2px 4px 0 white;"><code class="language-json" [innerHTML]="getJsonHtml(requestParams)"></code>
+    </pre>
 </igx-dialog>
