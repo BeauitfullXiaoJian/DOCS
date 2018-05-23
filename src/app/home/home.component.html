@@ -1,9 +1,151 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<h1>{{title}}</h1>
-<img src="assets/responsive.gif" alt="Ignite UI CLI">
-
-<div id="linksContainer">
-    <h3 class="links"><a target="_blank" rel="noopener" href="https://github.com/IgniteUI/ignite-ui-cli">Ignite UI CLI </a></h3>
-    <h3 class="links"><a target="_blank" rel="noopener" href="https://www.infragistics.com/products/ignite-ui-angular">Component Demos</a></h3>
-    <h3 class="links"><a target="_blank" rel="noopener" href="https://github.com/IgniteUI/igniteui-angular-ui-kits">Sketch UI Kit</a></h3>
-</div>
+<igx-tabs style="margin-top:10px;">
+    <igx-tabs-group label="测试" style="padding:4px;">
+        <igx-card>
+            <igx-card-content>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="text-align:left;width:100px;">参数名称</th>
+                                <th style="text-align:left;width:100px;">类型</th>
+                                <th style="text-align:left;width:100px;">是否必须</th>
+                                <th style="text-align:left;width:300px;">输入</th>
+                                <th style="text-align:left">描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let param of apiForm.params">
+                                <td style="text-align:left">
+                                    <code>{{param.name}}</code>
+                                </td>
+                                <td style="text-align:left">
+                                    <code>{{param.type}}</code>
+                                </td>
+                                <td style="text-align:left">
+                                    <span *ngIf="param.required" style="color:tomato">必填</span>
+                                    <span *ngIf="!param.required" style="color:#eee">选填</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="requestParams[param.name]" style="width: 100%;" type="text">
+                                </td>
+                                <td style="text-align:left">{{param.description}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <button (click)="tryApi(successForm,errorForm)" igxButtonBackground="#731963" igxButton="raised" igxRipple>测试</button>
+                </div>
+            </igx-card-content>
+        </igx-card>
+        <br>
+        <igx-card>
+            <igx-card-content>
+                <p>
+                    <span style="margin-right:30px;font-weight: bold;">请求方式:</span>
+                    <code>{{apiForm.requestMethod}}</code>
+                </p>
+                <p>
+                    <span style="margin-right:30px;font-weight: bold;">接口名称:</span>
+                    <span>{{apiForm.apiName}}</span>
+                </p>
+                <p>
+                    <span style="margin-right:30px;font-weight: bold;">接口地址:</span>
+                    <a>{{apiForm.apiUrl}}</a>
+                </p>
+                <p>
+                    <span style="margin-right:30px;font-weight: bold;">描述信息:</span>
+                    {{apiForm.apiDescription}}</p>
+            </igx-card-content>
+        </igx-card>
+    </igx-tabs-group>
+    <igx-tabs-group label="编辑" style="padding:4px;">
+        <igx-card>
+            <igx-card-content>
+                <p style="margin-left:0px;">
+                    <!-- <button igxButton="raised" style="margin-right:60px;" [igxButtonBackground]="requestColors[apiForm.requestMethod]">{{apiForm.requestMethod}}</button> -->
+                    <igx-radio [(ngModel)]="apiForm.requestMethod" igxRadioColor="red" value="get">Get</igx-radio>&nbsp;
+                    <igx-radio [(ngModel)]="apiForm.requestMethod" value="post">Post</igx-radio>&nbsp;
+                    <igx-radio [(ngModel)]="apiForm.requestMethod" value="put">Put</igx-radio>&nbsp;
+                    <igx-radio [(ngModel)]="apiForm.requestMethod" value="delete">Delete</igx-radio>&nbsp;
+                </p>
+                <igx-input-group>
+                    <input igxInput name="apiName" type="text" [(ngModel)]="apiForm.apiName" />
+                    <label igxLabel for="apiName">接口名称</label>
+                </igx-input-group>
+                <igx-input-group>
+                    <input igxInput name="apiUrl" type="text" [(ngModel)]="apiForm.apiUrl" />
+                    <label igxLabel for="apiUrl">接口地址</label>
+                </igx-input-group>
+                <igx-input-group>
+                    <textarea igxInput name="apiUrl" type="text" [(ngModel)]="apiForm.apiDescription"></textarea>
+                    <label igxLabel for="apiUrl">接口描述</label>
+                </igx-input-group>
+            </igx-card-content>
+        </igx-card>
+        <br>
+        <igx-card>
+            <igx-card-content>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="text-align:left">参数名称</th>
+                                <th style="text-align:left">类型</th>
+                                <th style="text-align:left">必填</th>
+                                <th style="text-align:left">描述</th>
+                                <th style="text-align:left">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let param of apiForm.params;index as i">
+                                <td style="text-align:left">
+                                    <input type="text" [(ngModel)]="param.name">
+                                </td>
+                                <td>
+                                    <select [(ngModel)]="param.type">
+                                        <option value="text">文本内容</option>
+                                        <option value="price">价格</option>
+                                        <option value="number">数字</option>
+                                        <option value="array">数组</option>
+                                        <option value="json">JSON</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <igx-switch (change)="param.required=$event.checked" [checked]="param.required"></igx-switch>
+                                </td>
+                                <td style="text-align:left">
+                                    <input type="text" [(ngModel)]="param.description">
+                                </td>
+                                <td style="text-align:left">
+                                    <button (click)="removeParam(i)" igxButton="icon" igxRipple igxButtonColor="#E41C77" igxRippleCentered="true">
+                                        <igx-icon fontSet="material" name="delete"></igx-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <button (click)="addParam()" igxButtonBackground="#731963" igxButton="raised" igxRipple>新增参数</button>
+                </div>
+            </igx-card-content>
+        </igx-card>
+    </igx-tabs-group>
+    <igx-tabs-group label="文本" style="padding:4px;">
+        <pre style="color:white;margin-top:5px;">{{apiForm|json}}</pre>
+    </igx-tabs-group>
+</igx-tabs>
+<igx-dialog #successForm title="请求结果" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
+    <div style="padding:10px;min-width: 800px;">
+        <pre style="background-color:white;"><code class="language-json" [innerHTML]="getJsonHtml()"></code>
+        </pre>
+    </div>
+</igx-dialog>
+<igx-dialog #errorForm title="请求结果" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
+    <p>状态码：{{responseJson.status}}</p>
+    <div style="padding:10px;min-width: 800px;">
+        <pre style="background-color:white;"><code class="language-json" [innerHTML]="getJsonHtml()"></code>
+        </pre>
+    </div>
+</igx-dialog>

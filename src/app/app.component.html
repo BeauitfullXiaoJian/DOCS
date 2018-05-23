@@ -1,14 +1,31 @@
 <div igxLayout>
-  <igx-nav-drawer #nav id="project-menu" isOpen="true" [enableGestures]='true' width="280px">
-    <ng-template igxDrawer>
-      <span igxDrawerItem [isHeader]="true">Views</span>
-      <span *ngFor="let route of topNavLinks" igxDrawerItem igxRipple routerLinkActive="igx-nav-drawer__item--active" routerLink="{{route.path}}">{{route.name}}</span>
-    </ng-template>
-  </igx-nav-drawer>
-  <div igxFlex class="main">
-    <igx-navbar title="api-docs" actionButtonIcon="menu" (onAction)="nav.toggle()"></igx-navbar>
-    <div class="content">
-      <router-outlet></router-outlet>
-     </div>
-  </div>
+    <igx-nav-drawer #nav id="project-menu" isOpen="true" [enableGestures]='true' width="280px">
+        <ng-template igxDrawer>
+            <span igxDrawerItem [isHeader]="true">Views</span>
+            <nav>
+                <span igxDrawerItem [isHeader]="true"> Email Account </span>
+                <span igxDrawerItem igxRipple> Inbox </span>
+                <span igxDrawerItem igxRipple [active]="true"> Drafts </span>
+                <span igxDrawerItem igxRipple> Sent </span>
+                <span igxDrawerItem [isHeader]="true"> Folders </span>
+                <span igxDrawerItem igxRipple> Deleted </span>
+                <span igxDrawerItem igxRipple> Archive </span>
+            </nav>
+        </ng-template>
+    </igx-nav-drawer>
+    <div igxFlex class="main">
+        <igx-navbar title="api-docs" actionButtonIcon="menu" (onAction)="nav.toggle()">
+            <button igxButton="icon" igxRipple igxRippleCentered="true">
+                <igx-icon name="search"></igx-icon>
+            </button>
+            <button igxButton="icon" igxRipple igxRippleCentered="true">
+                <igx-icon name="more_vert"></igx-icon>
+            </button>
+        </igx-navbar>
+        <div class="content">
+            <router-outlet>
+
+            </router-outlet>
+        </div>
+    </div>
 </div>
