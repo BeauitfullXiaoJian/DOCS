@@ -17,16 +17,9 @@ export class HomeComponent implements OnInit {
         'delete': 'red'
     };
 
-    apiForm = {
-        requestMethod: 'get',
-        apiName: '测试接口',
-        apiUrl: '/managerapi/permission/all',
-        apiDescription: '接口描述信息',
-        params: [
-            { name: 'a', type: 'text', required: true, description: '参数1' },
-            { name: 'b', type: 'text', required: true, description: '参数2' },
-        ]
-    };
+    get apiForm(): any {
+        return this.api.apiForm;
+    }
 
     requestParams: any = {
 

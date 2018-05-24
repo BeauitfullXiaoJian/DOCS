@@ -28,14 +28,68 @@ export class ApiService {
                             { name: 'a', type: 'text', required: true, description: '参数1' },
                             { name: 'b', type: 'text', required: true, description: '参数2' },
                         ]
+                    },
+                    {
+                        requestMethod: 'post',
+                        apiName: '其他接口',
+                        apiUrl: '/goods/test',
+                        apiDescription: '接口描述信息',
+                        params: [
+                            { name: 'c', type: 'text', required: true, description: '参数1' },
+                            { name: 'd', type: 'text', required: true, description: '参数2' },
+                        ]
                     }
                 ]
             }
         ]
     };
 
+    apiModel = {
+        modelTitle: '商品模块',
+        apiForms: [
+            {
+                requestMethod: 'get',
+                apiName: '测试接口',
+                apiUrl: '/tools/test',
+                apiDescription: '接口描述信息',
+                params: [
+                    { name: 'a', type: 'text', required: true, description: '参数1' },
+                    { name: 'b', type: 'text', required: true, description: '参数2' },
+                ]
+            },
+            {
+                requestMethod: 'post',
+                apiName: '其他接口',
+                apiUrl: '/goods/test',
+                apiDescription: '接口描述信息',
+                params: [
+                    { name: 'c', type: 'text', required: true, description: '参数1' },
+                    { name: 'd', type: 'text', required: true, description: '参数2' },
+                ]
+            }
+        ]
+    };
+
+    apiForm = {
+        requestMethod: 'get',
+        apiName: '测试接口',
+        apiUrl: '/tools/test',
+        apiDescription: '接口描述信息',
+        params: [
+            { name: 'a', type: 'text', required: true, description: '参数1' },
+            { name: 'b', type: 'text', required: true, description: '参数2' },
+        ]
+    };
 
     constructor(private http: HttpClient) { }
+
+    saveDocs() {
+        localStorage.setItem('apiDocs', JSON.stringify(this.apiDocs));
+    }
+
+    loadDocs() {
+
+    }
 
     request(method: string, url: string, params: { [key: string]: any }): Observable<string> {
         return this.http.request<string>(
@@ -64,6 +118,4 @@ export class ApiService {
         }
         return httpParams;
     }
-
-
 }
