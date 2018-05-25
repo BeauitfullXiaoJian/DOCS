@@ -142,5 +142,3 @@ function lastIndexOfTagName(elements, tagName) {
 
     return -1;
 }
-
-module.exports = HTMLParser;

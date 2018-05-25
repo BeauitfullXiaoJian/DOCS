@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit {
 
     };
 
-    responseJson: any = {};
+    responseJson: any = {
+
+    };
 
     constructor(private api: ApiService) {
         this.resetParam();
@@ -52,27 +54,47 @@ export class HomeComponent implements OnInit {
     }
 
     getJsonHtml(json?: any): string {
-        const jsonStr = JSON.stringify(json || this.responseJson, undefined, 2);
+        let jsonStr = '';
+        if (json) {
+            jsonStr = JSON.stringify(json, undefined, 2);
+        } else {
+            jsonStr = typeof this.responseJson === 'string' ? this.responseJson : JSON.stringify(this.responseJson, undefined, 2);
+        }
         return window.Prism.highlight(jsonStr, window.Prism.languages.json, 'json');
     }
 
-    tryApi(successForm: any, errorForm: any) {
+    tryApi(successForm: any, errorForm: any, errorFormTwo: any) {
         console.log(this.requestParams);
         this.api.request(this.apiForm.requestMethod, this.apiForm.apiUrl, this.requestParams).subscribe({
             next: (res) => {
-                this.responseJson = res;
+                try {
+                    this.responseJson = JSON.parse(res);
+                } catch (e) {
+                    this.responseJson = res;
+                }
                 successForm.open();
             },
             error: (error) => {
                 if (error instanceof HttpErrorResponse) {
                     this.responseJson = error;
-                    const html = new window.HTMLParser(error.error);
-                    const body = html.getElementsByTagName('body')[0];
-                    if (body) {
-                        this.responseJson.error = html.getElementsByTagName('body')[0].innerHTML;
+                    try {
+                        const html = new window.HTMLParser(error.error);
+                        const body = html.getElementsByTagName('body')[0];
+                        if (body) {
+                            this.responseJson.error = html.getElementsByTagName('body')[0].innerHTML;
+                            errorForm.open();
+                        } else {
+                            const jsonStr = JSON.stringify(JSON.parse(this.responseJson.error), undefined, 2);
+                            this.responseJson.error = window.Prism.highlight(jsonStr, window.Prism.languages.json, 'json');
+                            errorFormTwo.open();
+                        }
+                    } catch (e) {
+                        this.responseJson.error = JSON.stringify(error.error);
+                        errorFormTwo.open();
                     }
+                } else {
+                    console.log(111);
                 }
-                errorForm.open();
             },
         });
     }

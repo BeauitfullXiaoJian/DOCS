@@ -22,7 +22,7 @@ export class ApiService {
                     {
                         requestMethod: 'get',
                         apiName: '测试接口',
-                        apiUrl: '/tools/test',
+                        apiUrl: '/tooltest/form',
                         apiDescription: '接口描述信息',
                         params: [
                             { name: 'a', type: 'text', required: true, description: '参数1' },
@@ -92,9 +92,13 @@ export class ApiService {
     }
 
     request(method: string, url: string, params: { [key: string]: any }): Observable<string> {
-        return this.http.request<string>(
+        return this.http.request(
             method, this.apiDocs.apiHost + url,
-            { headers: this.getHeaders(), params: this.getParams(params) });
+            {
+                headers: this.getHeaders(),
+                params: this.getParams(params),
+                responseType: 'text',
+            });
     }
 
     private getHeaders(): HttpHeaders {

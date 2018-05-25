@@ -34,7 +34,7 @@
                     </table>
                 </div>
                 <div>
-                    <button (click)="tryApi(successForm,errorForm)" igxButtonBackground="#731963" igxButton="raised" igxRipple>测试</button>
+                    <button (click)="tryApi(successForm,errorFormOne,errorFormTwo)" igxButtonBackground="#731963" igxButton="raised" igxRipple>测试</button>
                     <button (click)="paramsForm.open()" igxButtonBackground="tomato" igxButton="raised" igxRipple>参数预览</button>
                 </div>
             </igx-card-content>
@@ -141,9 +141,13 @@
     <pre style="min-width:800px;background-color:white;max-height: 600px;overflow: auto;box-shadow: 0 2px 4px 0 white;"><code class="language-json" [innerHTML]="getJsonHtml()"></code>
         </pre>
 </igx-dialog>
-<igx-dialog #errorForm title="接口异常" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
+<igx-dialog #errorFormOne title="接口异常" (onRightButtonSelect)="errorFormOne.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
     <p>状态码：{{responseJson.status}}</p>
-    <div style="min-width:800px;background-color:white;max-height: 600px;overflow: auto;box-shadow: 0 2px 4px 0 white;" [innerHTML]="responseJson.error"></div>
+    <div style="width:800px;background-color:white;max-height: 600px;overflow: auto;box-shadow: 0 2px 4px 0 white;" [innerHTML]="responseJson.error"></div>
+</igx-dialog>
+<igx-dialog #errorFormTwo title="接口异常" (onRightButtonSelect)="errorFormOne.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
+    <p>状态码：{{responseJson.status}}</p>
+    <pre style="width:800px;background-color:white;max-height: 600px;overflow: auto;box-shadow: 0 2px 4px 0 white;" [innerHTML]="responseJson.error"></pre>
 </igx-dialog>
 <igx-dialog #paramsForm title="参数预览" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
     <pre style="min-width:500px;background-color:white;overflow: auto;box-shadow: 0 2px 4px 0 white;"><code class="language-json" [innerHTML]="getJsonHtml(requestParams)"></code>
