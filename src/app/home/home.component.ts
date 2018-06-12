@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
         this.apiForm.params.forEach(param => {
             params[param.name] = '';
         });
-        this.removeParam = params;
+        this.requestParams = params;
     }
 
     ngOnInit() { }
@@ -46,6 +46,14 @@ export class HomeComponent implements OnInit {
     addParam() {
         this.apiForm.params.push({ name: '参数名称', type: 'text', required: false, description: '参数的描述信息' });
         this.resetParam();
+    }
+
+    removeApi() {
+        const index = this.api.apiModel.apiForms.indexOf(this.apiForm);
+        if (index >= 0) {
+            this.api.apiModel.apiForms.splice(index, 1);
+        }
+        console.log(index);
     }
 
     removeParam(index: number) {

@@ -9,8 +9,8 @@
     </igx-nav-drawer>
     <div igxFlex class="main">
         <igx-navbar title="api-docs" actionButtonIcon="menu" (onAction)="nav.toggle()">
-            <button igxButton="flat" igxButtonColor="white" igxRipple>添加接口</button>
-            <button igxButton="flat" igxButtonColor="white" igxRipple>添加模块</button>
+            <button (click)="addApi()" igxButton="flat" igxButtonColor="white" igxRipple>添加接口</button>
+            <button (click)="modelForm.open()" igxButton="flat" igxButtonColor="white" igxRipple>添加模块</button>
             <button (click)="saveDocs()" igxButton="icon" igxRipple igxRippleCentered="true">
                 <igx-icon name="save"></igx-icon>
             </button>
@@ -22,6 +22,11 @@
 </div>
 
 <!--添加模块-->
-<igx-dialog #modelForm title="新增模块" (onRightButtonSelect)="addModel()" rightButtonLabel="确认" [closeOnOutsideSelect]="true">
-
+<igx-dialog #modelForm title="新增模块" (onRightButtonSelect)="addModel();modelForm.close()" rightButtonLabel="确认" [closeOnOutsideSelect]="true">
+    <div style="padding:20px;">
+        <igx-input-group>
+            <input igxInput name="modelTitle" type="text" [(ngModel)]="apiModel.modelTitle" />
+            <label igxLabel for="modelTitle">接口名称</label>
+        </igx-input-group>
+    </div>
 </igx-dialog>

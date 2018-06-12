@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
+    apiModel = {
+        modelTitle: '新模块',
+        apiForms: []
+    };
+
     constructor(
         public api: ApiService,
         public router: Router,
@@ -31,7 +36,10 @@ export class AppComponent implements OnInit {
     }
 
     addModel() {
-
+        this.api.apiDocs.apiModels.push({
+            modelTitle: this.apiModel.modelTitle,
+            apiForms: []
+        });
     }
 
     addApi() {

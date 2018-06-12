@@ -129,12 +129,23 @@
                 </div>
                 <div>
                     <button (click)="addParam()" igxButtonBackground="#731963" igxButton="raised" igxRipple>新增参数</button>
+                    <button (click)="removeApi()" igxButtonBackground="red" igxButton="raised" igxRipple>删除接口</button>
                 </div>
             </igx-card-content>
         </igx-card>
     </igx-tabs-group>
     <igx-tabs-group label="文本" style="padding:4px;">
         <pre style="background-color:white;overflow: auto;"><code class="language-json" [innerHTML]="getJsonHtml(apiForm)"></code></pre>
+    </igx-tabs-group>
+    <igx-tabs-group label="全局设置" style="padding:4px;">
+        <igx-input-group>
+            <input igxInput type="text" />
+            <label igxLabel>接口地址</label>
+        </igx-input-group>
+        <igx-input-group>
+            <input igxInput type="text" />
+            <label igxLabel>头部参数</label>
+        </igx-input-group>
     </igx-tabs-group>
 </igx-tabs>
 <igx-dialog #successForm title="请求结果" (onRightButtonSelect)="successForm.close()" rightButtonLabel="关闭" [closeOnOutsideSelect]="true">
